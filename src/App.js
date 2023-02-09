@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles.css";
+import React, { useState } from "react";
 
-function App() {
+export default function App() {
+  const modelRef = React.useRef();
+  const [annots, setAnnots] = useState([]);
+
+  const handleClick = (event) => {
+    const { clientX, clientY } = event;
+
+    if (modelRef.current) {
+      let hit = modelRef.current.positionAndNormalFromPoint(clientX, clientY);
+      if (hit) {
+        setAnnots((annots) => {
+          return [...annots, hit];
+        });
+      }
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <model-viewer   
+      src="./airmax_colored_left.glb"
+     skybox-image="./belfast_sunset_4k.hdr"
+      environment-image="./studio_small_08_4k.hdr"
+      
+      auto-rotate
+      camera-controls
+      ar
+      ar-modes="webxr"
+      onClick={handleClick}
+      ref={(ref) => {
+        modelRef.current = ref;
+      }}
+    >
+    </model-viewer>
   );
 }
-
-export default App;
