@@ -21,7 +21,7 @@ export default function App() {
   return (
     <model-viewer   
       src="./airmax_colored_left.glb"
-     skybox-image="./belfast_sunset_4k.hdr"
+    //  skybox-image="./belfast_sunset_4k.hdr"
       environment-image="./studio_small_08_4k.hdr"
       
       auto-rotate
